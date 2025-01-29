@@ -7,10 +7,10 @@ from datetime import datetime, timedelta
 from loguru import logger
 
 class RandomFileGenerator:
-    def __init__(self, columns: Dict[str, type], records: int, filename: str = "data/output.csv"):
+    def __init__(self, columns: Dict[str, type], records: int):
         self.columns = columns
         self.records = records
-        self.filename = filename
+        self.filename = f"data/output_{records}.csv"
 
     @staticmethod
     def random_string(length=10):
