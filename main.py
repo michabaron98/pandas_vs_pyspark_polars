@@ -1,18 +1,31 @@
 from pipeline.pandas_pipeline import PandasPipeline
-
 from pipeline.polars_pipeline import PolarsPipeline
-
 from pipeline.pyspark_pipeline import PysparkPipeline
+from data.generate_sample_data import RandomFileGenerator
 
-FILE_NAME = 'data/output_100.csv'
+from datetime import datetime
+
+
+RECORDS = 1 * 10 ** 8
+generator = RandomFileGenerator(columns={"Name": str, 
+                                         "Surname": str, 
+                                         "Department": int,
+                                         "Age": int, 
+                                         "Salary": float, 
+                                         "Active": bool, 
+                                         "Timestamp": datetime}, 
+                                records=RECORDS)
+generator.generate_csv()
+FILE_NAME = f'data/output_{RECORDS}.csv'
 
 pyspark_extractor = PysparkPipeline(file_name=FILE_NAME)
-data = pyspark_extractor.run()
+pyspark_extractor.run()
+del pyspark_extractor
 
 pandas_extractor = PandasPipeline(file_name=FILE_NAME)
-data = pandas_extractor.run()
-
+pandas_extractor.run()
+del pandas_extractor
 
 polars_extractor = PolarsPipeline(file_name=FILE_NAME)
-data = polars_extractor.run()
-print(data)
+polars_extractor.run()
+del polars_extractor
