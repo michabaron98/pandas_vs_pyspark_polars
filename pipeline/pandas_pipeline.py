@@ -10,7 +10,7 @@ class PandasPipeline(BasePipeline):
     def __init__(self, file_name):
         super().__init__()
         self.file_name = file_name
-        self.output_file_name = f"data/output_pyspark_{datetime.now()}.parquet"
+        self.output_file_name = f"data/output/output_pyspark_{datetime.now()}.parquet"
     
     def read_csv(self) -> pd.DataFrame:
         return pd.read_csv(self.file_name)

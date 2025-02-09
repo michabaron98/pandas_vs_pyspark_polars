@@ -25,7 +25,7 @@ class PysparkPipeline(BasePipeline):
                     .config("spark.driver.host", "127.0.0.1")\
                         .config("spark.ui.showConsoleProgress", "false")\
                             .getOrCreate()
-        self.output_file_name = f"data/output_pyspark_{datetime.now()}.parquet"
+        self.output_file_name = f"data/output/output_pyspark_{datetime.now()}.parquet"
 
     def read_csv(self):
         return self.session.read.csv(self.file_name, header=True, inferSchema=True)
