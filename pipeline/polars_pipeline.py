@@ -1,4 +1,6 @@
 from typing import Optional, Literal
+from datetime import datetime
+
 from common.timer import calculate_execution_time
 
 import polars as pl
@@ -10,6 +12,7 @@ class PolarsPipeline(BasePipeline):
     def __init__(self, file_name):
         super().__init__()
         self.file_name = file_name
+        self.output_file_name = f"data/output_pyspark_{datetime.now()}.parquet"
     
     def read_csv(self) -> pl.DataFrame:
         return pl.read_csv(self.file_name)
@@ -24,11 +27,10 @@ class PolarsPipeline(BasePipeline):
         return df.with_columns(pl.col(column).str.replace( pattern, new_value))
     
     def save_to_parquet(self, df:pl.DataFrame , 
-                        file_name: str = 'data/output_polars.parquet', 
                         compression: str='gzip', 
                         engine:str='pyarrow'):
         use_pyarrow = True if engine=='pyarrow' else False
-        df.write_parquet(file_name, compression=compression,
+        df.write_parquet(self.output_file_name, compression=compression,
                          use_pyarrow=use_pyarrow)
         
     @calculate_execution_time  

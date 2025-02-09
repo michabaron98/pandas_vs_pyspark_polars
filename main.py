@@ -5,6 +5,10 @@ from pipeline.polars_pipeline import PolarsPipeline
 from pipeline.pyspark_pipeline import PysparkPipeline
 
 FILE_NAME = 'data/output_100.csv'
+
+pyspark_extractor = PysparkPipeline(file_name=FILE_NAME)
+data = pyspark_extractor.run()
+
 pandas_extractor = PandasPipeline(file_name=FILE_NAME)
 data = pandas_extractor.run()
 

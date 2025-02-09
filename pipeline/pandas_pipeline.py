@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pipeline.base_pipeline import BasePipeline
 from common.timer import calculate_execution_time
 
@@ -8,6 +10,7 @@ class PandasPipeline(BasePipeline):
     def __init__(self, file_name):
         super().__init__()
         self.file_name = file_name
+        self.output_file_name = f"data/output_pyspark_{datetime.now()}.parquet"
     
     def read_csv(self) -> pd.DataFrame:
         return pd.read_csv(self.file_name)
@@ -23,10 +26,9 @@ class PandasPipeline(BasePipeline):
         return df
 
     def save_to_parquet(self, df:pd.DataFrame , 
-                        file_name: str = 'data/output_pandas.parquet', 
                         compression: str='gzip', 
                         engine:str='pyarrow'):
-        df.to_parquet(file_name,
+        df.to_parquet(self.output_file_name,
                       engine=engine,
                         compression=compression)
         
