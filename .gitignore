@@ -1,1 +1,4 @@
 **/__pycache__
+pipelnie/__pycache__/**
+common/__pycache__/**
+data/output/**
